@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open Sans">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
+
+    <title>Document</title>
+</head>
+
+<body>
+    <section>
+        <div id="vezba_content">
+            <h3 class="podnaslov">Vežba 07</h3>
+            <!--VEZBA 07, zadatak 01-->
+            <p id="zadatak"> Zadatak 01: Radio button boja</p>
+            <p>Izaberite omiljenu boju!</p>
+            <form name="OmiljenaBoja">
+                <input type="radio" name="boja" value="Crvena">Crvena
+                <br>
+                <input type="radio" name="boja" value="Zelena">Zelena
+                <br>
+                <input type="radio" name="boja" value="Plava">Plava
+                <br>
+                <input type="button" name="radio_ispis" value="Ispis" onclick="zadatak1()">
+            </form>
+            <hr>
+            <script>
+                function zadatak1() {
+                    alert(document.OmiljenaBoja.boja.value);
+                }
+            </script>
+            <!--VEZBA 07, zadatak 02-->
+            <p id="zadatak"> Zadatak 02: Konvertor milja ~ kilometar
+            </p>
+            <form name="zadatak2a">
+                <input type="text" name="unesi_broj"> Vrednost za pretvaranje:
+                <br>
+                <input type="radio" name="konvert" value="km_m" checked> km u milje
+                <br>
+                <input type="radio" name="konvert" value="m_km"> milje u km
+                <br>
+                <input type="text" name="rezultat"> Rezultat:
+                <br>
+                <input type="button" name="konvertuj" value="Konvertuj!!" onclick="zadatak2()">
+            </form>
+            <br />
+            <hr>
+            <script>
+                function zadatak2() {
+                    var rezultat;
+                    var vrednost = document.zadatak2a.unesi_broj.value;
+                    if (document.zadatak2a.konvert.value == "km_m") {
+                        rezultat = vrednost / 1.609;
+                    } else {
+                        rezultat = vrednost * 1.609;
+                    }
+                    document.zadatak2a.rezultat.value = rezultat;
+                }
+            </script>
+            <!--VEZBA 07, zadatak 03-->
+            <p id="zadatak"> Zadatak 03: Provera check box-a</p>
+            <br>
+            <form name="cekiraj1">
+                <input type="checkbox" name="check1"> Prihvatam!
+                <br>
+                <input type="button" name="prihvatam" value="Prosledi" onclick="Prihvatam()">
+            </form>
+            <br />
+            <hr>
+            <script>
+                function Prihvatam() {
+                    if (document.cekiraj1.check1.checked == true) {
+                        alert("Prihvatili ste uslove!!");
+                    } else alert("Niste prihvatili uslove!!");
+                }
+            </script>
+            <!--VEZBA 07, zadatak 04-->
+            <p id="zadatak"> Zadatak 04: Narucivanje pice.</p>
+            <p>Forma za narucivanje pice</p>
+            <form name="zadatak4">
+                <input type="radio" name="malavelika" value="80" checked> Mala pica (80 RSD)
+                <br>
+                <input type="radio" name="malavelika" value="100"> Velika pica (100 RSD)
+                <br>
+                <p>Izaberite priloge:</p>
+                <input type="checkbox" name="prilog" value="20"> Pecurke (+20 RSD)
+                <br>
+                <input type="checkbox" name="prilog" value="35"> Maslinke (+35 RSD)
+                <br>
+                <input type="checkbox" name="prilog" value="28"> Kobasice (+28 RSD)
+                <br>
+                <br>
+                <input type="button" name="naruci" value="Naruci!" onclick="NaruciPicu()">
+                <br>
+                <a>Cena narucene pice je
+                    <span id="cena_pice">___</span> dinara.</a>
+            </form>
+            <hr>
+            <script>
+                function NaruciPicu() {
+                    var rezultat = Number(document.zadatak4.malavelika.value);
+                    for (i = 0; i < 3; i++) {
+                        if (document.zadatak4.prilog[i].checked == true) {
+                            rezultat += Number(document.zadatak4.prilog[i].value);
+                        }
+                    }
+                    document.getElementById("cena_pice").innerHTML = rezultat + " RSD!";
+                }
+            </script>
+
+            <!--VEZBA 07, zadatak 05-->
+            <p id="zadatak"> Zadatak 05: Konvertor bez dugmeta</p>
+            <form name="zadatak5">
+                <input type="text" name="unesi_broj"> Vrednost za pretvaranje:
+                <br>
+                <input type="radio" name="konvert" value="km_m" onclick="bezDugmeta()"> km u milje
+                <br>
+                <input type="radio" name="konvert" value="m_km" onclick="bezDugmeta()"> milje u km
+                <br>
+                <input type="text" name="rezultat"> Rezultat:
+                <br>
+            </form>
+            <br />
+            <hr>
+            <script>
+                function bezDugmeta() {
+                    var rezultat;
+                    var vrednost = document.zadatak5.unesi_broj.value;
+                    if (document.zadatak5.konvert.value == "km_m") {
+                        rezultat = vrednost / 1.609;
+                    } else {
+                        rezultat = vrednost * 1.609;
+                    }
+                    document.zadatak5.rezultat.value = rezultat;
+                }
+            </script>
+
+        </div>
+    </section>
+</body>
+
+</html>

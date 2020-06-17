@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open Sans">
+    <link rel="stylesheet" type="text/css" media="screen" href="./css/style.css">
+    <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <title>Document</title>
+</head>
+
+<body>
+    <section>
+        <div>
+            <h1 class="naslov">VEŽBAJMO NA LETNJEM RASPUSTU</h1>
+
+            <input type="button" onclick="getId(this.id)" id="matematika" value="MATEMATIKA">
+            <input type="button" onclick="getId(this.id)" id="vezba02" value="PRIRODA I DRUŠTVO">
+            <input type="button" onclick="getId(this.id)" id="vezba03" value="SRPSKI JEZIK">
+        </div>
+
+    </section>
+    <div id="sadrzaj"></div>
+    <div id="divmatematika"></div>
+    <script>
+        function getId(cliked_id) {
+            var x = cliked_id;
+            var z = 'vezbe/' + x + '.html';
+            $('#sadrzaj').load(z);
+        }
+
+        //function getId(cliked_id) {
+        //var x = cliked_id;
+        //var z = '<object type="text/html" id="test" data=' + x + '.html></object>';
+        //$('#sadrzaj').load('http://192.168.200.240/js/' + x + '.html #vezba_content');
+        //}
+    </script>
+</body>
+
+
+</html>

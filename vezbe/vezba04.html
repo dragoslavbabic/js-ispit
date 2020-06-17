@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open Sans">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
+
+    <title>Document</title>
+</head>
+
+<body>
+    <section>
+        <div id="vezba_content">
+            <h3 class="podnaslov">Vežba 04</h3>
+
+            <!--VEZBA 04, zadatak 01-->
+            <p id="zadatak"> Zadatak 01: Brojevi od 0 do zeljenog broja:</p>
+            <input type="text" id="broj_input01" placeholder="Unesite zeljeni broj">
+            <input type="button" id="plus_jedan" value="Ispiši!!">
+            <input type="button" onclick="testrange()" value="Ispiši!! FP">
+            <input type="button" onclick="testrange_arrow()" value="Ispiši!! arrow FP">
+
+            <p>Brojevi od 0 do
+                <span id="zeljeni_broj01">___</span>
+            </p>
+            <div id="ispisi_brojeve01">&nbsp;</div>
+            <hr>
+            <!--VEZBA 04, zadatak 02-->
+            <p id="zadatak"> Zadatak 02: Parni brojevi</p>
+            <input type="text" id="broj_input02" placeholder="Unesite zeljeni broj">
+            <input type="button" id="parni" value="Ispiši!!">
+            <p>Parni brojevi od 0 do
+                <span id="zeljeni_broj02">___</span>
+            </p>
+            <div id="ispisi_brojeve02">&nbsp;</div>
+            <hr>
+            <script>
+                document.getElementById("parni").onclick = function parniBrojevi() {
+                    document.getElementById("ispisi_brojeve02").innerHTML = "";
+                    var krajnji_broj02 = document.getElementById("broj_input02").value;
+                    document.getElementById("zeljeni_broj02").innerHTML = krajnji_broj02;
+                    for (var i = 0; i <= krajnji_broj02; i++) {
+                        if (i % 2 == 0)
+                            document.getElementById("ispisi_brojeve02").innerHTML += "<br>" + i;
+                        1
+                    }
+                }
+            </script>
+            <!--VEZBA 04, zadatak 03-->
+            <p id="zadatak"> Zadatak 03: Brojevi od zeljenog broja do 0</p>
+            <input type="text" id="broj_input03" placeholder="Unesite zeljeni broj">
+            <input type="button" id="minus_jedan" value="Ispiši!!">
+            <p>brojevi od
+                <span id="zeljeni_broj03">___</span> do 0.
+            </p>
+            <div id="ispisi_brojeve03">&nbsp;</div>
+            <hr>
+            <script>
+                document.getElementById("minus_jedan").onclick = function minusJedan() {
+                    document.getElementById("ispisi_brojeve03").innerHTML = "";
+                    var krajnji_broj03 = document.getElementById("broj_input03").value;
+                    document.getElementById("zeljeni_broj03").innerHTML = krajnji_broj03;
+                    for (var i = krajnji_broj03; i >= 0; i--) {
+                        document.getElementById("ispisi_brojeve03").innerHTML += "<br>" + i;
+                    }
+                }
+            </script>
+            <!--VEZBA 04, zadatak 04-->
+            <p id="zadatak"> Zadatak 04: Pogadjanje brojeva</p>
+            <p>Broj koji je trebalo pogoditi je:
+                <span id="random">___</span>
+            </p>
+            <input type="button" id="pogodi" value="Pogodi!">
+            <hr>
+            <script>
+                document.getElementById("pogodi").onclick = function pogodi() {
+                    var random = Math.floor(Math.random() * 10);
+                    do {
+                        var user_num = prompt("Unesi broj od 0 do 10!");
+                        document.getElementById("random").innerHTML = random;
+                    }
+                    while (random != user_num);
+                    alert("Pogodili ste!!");
+                    // var user_num = prompt("Unesi broj od 0 do 10!");
+                    //if (random == user_num) {
+                    //alert("Bravo! broj je pogodjen!");
+                    //} else alert("Probaj opet");
+                    //document.getElementById("random").innerHTML = random;
+                }
+            </script>
+        </div>
+    </section>
+</body>
+<script src="../js/vezba04.js"></script>
+</html>
