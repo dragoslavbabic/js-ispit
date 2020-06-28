@@ -26,6 +26,7 @@
   </script>
   <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js"></script>
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <script src="js/obpov.js"></script>
 
 </head>
 
@@ -69,12 +70,27 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center">
-        <h1 class="mt-5">Vežbajmo matematiku na letnjem raspustu!</h1>
-        <p class="lead">Complete with pre-defined file paths and responsive navigation!</p>
-        <ul class="list-unstyled">
-          <li>Bootstrap 4.5.0</li>
-          <li>jQuery 3.5.1</li>
-        </ul>
+        <h1 class="mt-5">Obim i površina</h1>
+        <h5 id="zadatak_obim"> ZADATAK: Izračunaj obim i površinu pravoguanika ako su date 
+          stranice a =
+           <span id="stranica_a"></span> cm
+          i stranice b =
+          <span id="stranica_b"></span> cm <br>
+        </h5>
+        <hr>
+        <p>
+            Upiši rezultat: Površina = <input type="text" id="rez_pov_input" placeholder="upisi rezultat"> cm<sup>2</sup>
+            Obim= <input type="text" id="rez_ob_input" placeholder="upisi rezultat">
+
+        </p>
+        <input type="button" onclick="ObimPovrsinaFP()" id="rez_povrsina" value="Proveri!">
+        <input type="button" onclick="Ponovi(this.id)" id="povrsina" value="Novi zadatak!">
+
+        <hr>
+        <hr>
+        <p id="pov_provera"></p> <br>
+        <p id="obim_provera"></p>
+
       </div>
     </div>
   </div>
@@ -82,5 +98,8 @@
   <!-- Bootstrap core JavaScript -->
 
 </body>
+<script>Ponovi();</script>
+
+
 
 </html>

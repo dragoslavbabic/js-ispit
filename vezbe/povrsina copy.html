@@ -1,0 +1,41 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open Sans">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
+    <script type="text/javascript" src="../js/jquery/jquery-3.3.1.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
+</head>
+
+    <section>
+        <div id="vezba_content">
+            <h3 class="podnaslov">Obim i povrsina</h3>
+            <!--VEZBA 01, zadatak 01-->
+            <p id="zadatak_obim"> Izračunaj obim i povrsinu pravoguanika ako su date 
+                stranice a=:
+                 <span id="stranica_a"></span> cm
+                i stranice b =
+                <span id="stranica_b"></span> cm <br>
+            </p>
+            <hr>
+            <p>
+                Upisi rezultat: Povrsina = <input type="text" id="rez_pov_input" placeholder="upisi rezultat"> cm<sup>2</sup>
+                Obim= <input type="text" id="rez_ob_input" placeholder="upisi rezultat">
+
+            </p>
+            <input type="button" onclick="ObimPovrsinaFP()" id="rez_povrsina" value="Proveri!">
+            <input type="button" onclick="NoviPokusaj(this.id)" id="povrsina" value="Novi zadatak!">
+
+            <hr>
+            <p id="pov_provera"></p> <br>
+            <p id="obim_provera"></p>
+
+        </div>
+
+        </div>
+
+    </section>
+    <!-- <div id="divpovrsina"></div> -->
+    <script>
+    </script>
+    <script src="../js/vezba01.js"></script>
+    <script src="../js/index.js"></script>

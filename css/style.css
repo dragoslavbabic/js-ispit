@@ -12,6 +12,8 @@ body {
 
 p span {
     font-weight: bold;
+    font-family: monospace;
+    font-size: large;
 }
 
 #zadatak {
@@ -19,26 +21,23 @@ p span {
     font-weight: bolder;
 }
 
-#sadrzaj {
+.zadatak{
+    background-color: antiquewhite;
+}
+
+/* #sadrzaj {
     height: 1500px;
 }
 
 #divmatematika {
     height: 1500px;
 }
-
+ */
 
 #test {
     width: 100%;
     height: 100%;
     display: block;
-}
-
-table,
-th,
-td {
-    border: 1px solid black;
-    border-collapse: collapse;
 }
 
 .forma {
@@ -47,26 +46,8 @@ td {
     background-color: bisque;
 }
 
-#tabletest {
-    font-family: "Open Sans";
-    border-collapse: collapse;
-    font-weight: bold;
-    font-size: 12px;
-    color: #4e4e4e;
+.odgovor{
+    margin-top: 20px;
 }
 
-#tabletest td,
-tabletest th {
-    border: 0px solid black;
-    padding: 15px 30px;
-}
-
-#tabletest tr:nth-child(even) {
-    background-color: rgb(221, 221, 221);
-    display: table-row;
-}
-
-#tabletest tr:nth-child(odd) {
-    background-color: rgb(255, 255, 255);
-}
 
