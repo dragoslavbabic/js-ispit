@@ -28,9 +28,17 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <script src="js/index.js"></script>
     <script src="js/sabiranje.js"></script>
+
+
+
+
+
+
+
 </head>
 
 <body>
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div class="container">
@@ -82,8 +90,7 @@
                     <label class="radio-inline">
                         <input type="radio" name="cifre" value="10000,99999"> Od 10000 do 99999
                     </label><br>
-                    <button type="submit" class="btn btn-primary" onclick="GenerisiZadatke()">Napravi zadatke!</button>
-
+                    <button type="submit" class="btn btn-primary" onclick="GenerisiZadatke()">Submit</button>
                 </div>
             </div>
         </div>
@@ -91,18 +98,51 @@
     <div id="vezba_content" class="container-fluid">
         <hr>
         <div class="row align-items-center" id="appendme">
+            <!-- <div class="card col" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">ZADATAK:</h5>
+                    <p class="card-text">Saberi sledeće brojeve:</p>
+                    <p><span> &nbsp;</span><span id="broj_1">12331</span><br>+<span id="broj_2">22344</span><br>+<span
+                            id="broj_3">22344</span></p>
+                    <hr>
+                    <div class="sab form-group">
+                        <input type="text" class="form-control" value="Hello World...">
+                        <div class="dugme">
+                            <button class="btn btn-primary" onclick="getVal()" id="myButton" >Proveri!</button>
+                        </div>
+                </div>
+            </div> -->
+            <!-- <div class="card col" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">ZADATAK:</h5>
+                    <p class="card-text">saberi sledece brojeve:</p>
+                    <p><span> &nbsp;</span><span id="broj_1">12331</span><br>
+                        +<span id="broj_2">22344</span><br>
+                        +<span id="broj_3">22344</span></p>
+                    <hr>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="rez_sab">
+                        <label for="usr">Upisi rezultat!</label>
+
+                    </div>
+
+                    <a href="#" class="btn btn-primary">Proveri!</a>
+                </div>
+            </div> -->
 
         </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row align-items-center rezultati">
-            <div class="zadaci">
-
-            </div>
+        <div class="rezultati">
         </div>
-    </div>
-    <div class="row align-items-center ocena">
-    </div>
+
+
+    <!-- Bootstrap core JavaScript -->
+<!-- <script>
+$('button').click(function() {
+    console.log( $(this).closest('div.sab').find('input').val() );
+});
+</script> -->
+
 
 </body>
 

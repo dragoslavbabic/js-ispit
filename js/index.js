@@ -35,9 +35,7 @@ class Kartica{
             '<p class="card-text">'+opis+'</p>'+
             operacija;
           '</div>'+
-        '</div>'
-        
-        ;
+        '</div>';
         return el;
         
     }
@@ -52,10 +50,6 @@ class Kartica{
 
     }
     
-    testMetod(x){
-        return (x);
-    }
-
     sabiranje(){
         let niz = [];
         for(const key in Array.from({length:3})){
@@ -88,5 +82,15 @@ class Proveri {
         this._brojevi = brojevi;
         this._rez = rez;
         this._tacan_rez = tacan_rez;
+    }
+}
+
+class KarticaPodaci extends Array {
+    constructor(zadatak,brojevi,rez){
+        super()
+        this._zadatak = zadatak;
+        this._brojevi = brojevi;
+        this._rez = rez;
+
     }
 }

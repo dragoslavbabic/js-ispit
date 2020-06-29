@@ -1,13 +1,12 @@
 const arr=[];
-const ocena = [];
 
-const proveri_div =    
+const proveri =    
 '<div class="col-12 text-center proveri_rezultate">'+
-'<button onclick="proveri(arr)" id="proveri_rezultat" class="btn btn-primary">Proveri!</button>'+
+'<button onclick="uhuh(arr)" class="btn btn-primary">Proveri!</button>'+
 '</div>';
 
 function GenerisiZadatke(){
-    $('#appendme,.proveri_rezultate,.zadaci_sadrzaj,.rezultati').html('');
+    $('#appendme,.proveri_rezultate').html('');
     let y = new Kartica("sabiranje",100,999);
     let r;
 
@@ -15,7 +14,7 @@ for(const key in Array.from({length:5})){
     r = y.generisiKarticu();
     $('#appendme').append(r);
 }
-$('.rezultati').append(proveri_div);
+$('.rezultati').append(proveri);
 //console.log(r);
 }
 
@@ -38,26 +37,17 @@ function getSum(total, num) {
     return total + Math.round(num);
   }
 
-function proveri(x) {
+function uhuh(x) {
     x.forEach(element => {
-        let x = element._brojevi.reduce(getSum,0);
-        let y = element._rez;
         let rez_card = 
-        '<div class="zadaci_sadrzaj card col" style="width: 18rem;">'+
+        '<div class="zadaci_sadrzaj card col" style="width: 18rem;"></div>'+
         '<h4>Zadatak broj '+ element._zadatak+'</h4>'+
         '<p>Brojevi za sabiranje su: ('+ element._brojevi+')</p>'+
-        '<p>Tacan rezultat je: <b>'+ x+'</b></p>'+
-        '<p>Tvoj odgovor je: <b>'+ y+'<b></p>'+
-        uporedi(x,y)+
-        '</div>'
-        ;
-        ocena.push(uporedi(x,y));
-        $('.rezultati').append(rez_card);
-        $('#proveri_rezultat').prop('disabled',true);
+        '<p>Tacan rezultat je: '+ element._brojevi.reduce(getSum,0)+'</p>';
+        
+        $('.zadaci').append('<div class="zadaci_sadrzaj card col" style="width: 18rem;"></div>');
+        $('.zadaci_sadrzaj').append('<h4>Zadatak broj '+ element._zadatak+'</h4>');
+        $('.zadaci_sadrzaj').append('<p>Brojevi za sabiranje su: ('+ element._brojevi+')</p>');
+        $('.zadaci_sadrzaj').append('<p>Tacan rezultat je: '+ element._brojevi.reduce(getSum,0)+'</p>');
     });
-
-    function uporedi(x,y){
-        return x ==y ? 'Odgovor je tacan!!' :'Odgovor nije tacan!!!';
-    }
-    arr.length = 0;
 }
