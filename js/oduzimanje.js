@@ -12,7 +12,7 @@ function GenerisiZadatke(){
     let min = parseInt( minmax.split(',')[0]);
     let max = parseInt(minmax.split(',')[1]);
     console.log(min)
-    let y = new Kartica("sabiranje",min,max);
+    let y = new Kartica("oduzimanje",min,max);
     let r;
 
 for(const key in Array.from({length:5})){
@@ -40,7 +40,7 @@ function getSum(total, num) {
     return total + Math.round(num);
   }
 
-function proveri(x) {
+  function proveri(x) {
     let k = new Kartica;
     x.forEach(element => {
         let x = element._brojevi.reduce(getSum,0);

@@ -5,17 +5,12 @@ class Kartica{
         this.max = max;
     }
 
-    postaviOpis(){
-         return this.opis;
-        
-    }
-
     generisiKarticu(){
         const [opis, operacijax] = this.opisOperacija();
         let operacija = 
         operacijax+
         '<div class="form-group sab">'+
-        '<input type="text" class="form-control " id="rez_sab">'+
+        '<input type="text" class="form-control ">'+
         '<label for="usr">Upisi rezultat!</label>'+
         '<div class="dugme">'+
         '<button onclick="getVal()" class="btn btn-primary">Potvrdi odgovor!</button>'+
@@ -43,22 +38,25 @@ class Kartica{
     opisOperacija(){
         let opis = this.opis;
         return opis == 'sabiranje' ? ['Saberi sledeće brojeve:', this.sabiranje()]
-        : opis == 'oduzimanje' ?'Oduzmi sledeće brojeve:'
+        : opis == 'oduzimanje' ?['Oduzmi sledeće brojeve:', this.oduzimanje()]
         : opis == 'mnozenje' ? 'Pomnoži sledeće brojeve:'
         : opis == 'deljenje' ?'Podeli sledeće brojeve:'
         :' Izračunaj obim i površinu pravoguanika ako su date stranice a = 19 cm i stranice b = 19 cm';
 
     }
-    
-    sabiranje(){
+
+    rndNiz(l,g,h){
         let niz = [];
-        for(const key in Array.from({length:3})){
-            let r = this.rndBroj();
+        for(const key in Array.from({length:l})){
+            let r = this.rndBroj(g,h);
             niz.push(r);
         }
-
         niz.sort(function(a, b){return b-a});
-        
+        return niz;
+    }
+    
+    sabiranje(){
+        let niz = this.rndNiz(3,this.min,this.max);
         let x = 
         '<p><span> &nbsp;</span>'+
         '<span id="broj_1">'+niz[0]+'</span><br>'+
@@ -67,13 +65,29 @@ class Kartica{
         return x;
     }
 
-    rndBroj=()=> Math.floor(Math.random()*(this.max-this.min+1))+this.min;
-    
-
-    raspon(){
-        return "Split"
+    oduzimanje(){
+        let niz = this.rndNiz(2,this.min,this.max);
+        let x = 
+        '<p><span>&nbsp</span>'+
+        '<span id="broj_1">'+niz[0]+'</span><br>'+
+        '<span>-</span><span id="broj_2">'+niz[1]+'</span><br>'
+        return x;
     }
-    
+
+
+    rndBroj=(g,h)=> Math.floor(Math.random()*(h-g+1))+g;
+
+    proveriRezultat(x,y){
+            return x ==y ? 'Odgovor je tacan!!' :'Odgovor nije tacan!!!';
+    }
+
+    oceniMe(){
+        let recenica = 'Odgovor je tacan!!';
+        let count = ocena.reduce((n, x) => n + (x === recenica), 0);
+        
+        return count;
+    }
+
 }
 
 class Proveri {
