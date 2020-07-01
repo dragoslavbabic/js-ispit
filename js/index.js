@@ -1,3 +1,5 @@
+const arr = [];
+const ocena = [];
 class Kartica {
   constructor (opis, min, max) {
     this.opis = opis;
@@ -37,15 +39,15 @@ class Kartica {
 
   opisOperacija () {
     let opis = this.opis;
-    return opis == 'sabiranje'
+    return opis == 'plus'
       ? ['Saberi sledeće brojeve:', this.sabiranje ()]
-      : opis == 'oduzimanje'
+      : opis == 'minus'
           ? ['Oduzmi sledeće brojeve:', this.oduzimanje ()]
-          : opis == 'mnozenje'
-              ? 'Pomnoži sledeće brojeve:'
-              : opis == 'deljenje'
-                  ? 'Podeli sledeće brojeve:'
-                  : ' Izračunaj obim i površinu pravoguanika ako su date stranice a = 19 cm i stranice b = 19 cm';
+          : opis == 'pomnozi'
+              ? ['Pomnoži sledeće brojeve:', this.mnozenje()]
+              : opis == 'podeli'
+                  ? ['Podeli sledeće brojeve:', this.deljenje()]
+                  : [' Izračunaj obim i površinu pravoguanika ako su date stranice:',this.obpov()];
   }
 
   rndNiz (l, g, h) {
@@ -89,6 +91,50 @@ class Kartica {
     return x;
   }
 
+  mnozenje () {
+    let cinioc1 = this.rndBroj (this.min, this.max);
+    let cinioc2 = this.rndBroj(2,9);
+    let x =
+      '<p><span>&nbsp</span>' +
+      '<span id="broj_1">' +
+      cinioc1 +
+      '</span>'+
+      '<span>*</span><span id="broj_2">' +
+      cinioc2 +
+      '</span><br>';
+    return x;
+  }
+
+
+  deljenje () {
+    let deljenik = this.rndBroj (this.min, this.max);
+    let delilac = this.rndBroj(2,9);
+    let x =
+      '<p><span>&nbsp</span>' +
+      '<span id="broj_1">' +
+      deljenik +
+      '</span>' +
+      '<span>:</span><span id="broj_2">' +
+      delilac +
+      '</span><br>';
+    return x;
+  }
+
+  obpov () {
+    let niz = this.rndNiz (2, this.min, this.max);
+    let x =
+      '<p><span></span>' +
+      '<span id="broj_1">a = ' +
+      niz[0] +
+      '</span><br>' +
+      '<span></span><span id="broj_2">b = ' +
+      niz[1] +
+      '</span><br>';
+    return x;
+  }
+
+
+
   rndBroj = (g, h) => Math.floor (Math.random () * (h - g + 1)) + g;
 
   proveriRezultat (x, y) {
@@ -117,6 +163,41 @@ class Kartica {
               ? 3
               : prosek > 0.70 && prosek < 0.84 ? 4 : 5 + '! BRAVO!!!!';
   }
+
+
+  proveri(x,op) {
+    x.forEach(element => {
+      let x = element._brojevi.reduce(op);
+      let y = element._rez;
+      //let z = uporedi(x,y);
+      let w = k.proveriRezultat(x, y);
+      let rez_card =
+        '<div class="zadaci_sadrzaj card col " style="width: 18rem;">' +
+        '<h4>Zadatak broj ' +
+        element._zadatak +
+        '</h4>' +
+        '<p>Brojevi su: (' +
+        element._brojevi +
+        ')</p>' +
+        '<p>Tacan rezultat je: <b>' +
+        x +
+        '</b></p>' +
+        '<p>Tvoj odgovor je: <b>' +
+        y +
+        '<b></p>' +
+        w +
+        '</div>';
+      ocena.push(w);
+      $('.rezultati').append(rez_card);
+      $('#proveri_rezultat').prop('disabled', true);
+    });
+    
+    let ww = this.oceniMe();
+    $('.ocena').append(ww);
+    arr.length = 0;
+    ocena.length = 0;
+  }
+
 }
 
 class Proveri {
@@ -136,3 +217,45 @@ class KarticaPodaci extends Array {
     this._rez = rez;
   }
 }
+
+function GenerisiZadatke(operacija) {
+  let proveri_div =
+  '<div class="col-12 text-center proveri_rezultate">' +
+  '<button onclick="testirajMe(arr,'+operacija+')" id="proveri_rezultat" class="btn btn-primary">Proveri!</button>' +
+  '</div>';
+
+  arr.length = 0;
+  ocena.length = 0;
+  $('#appendme,.proveri_rezultate,.zadaci_sadrzaj,.rezultati').html('');
+  let minmax = $('input[name="cifre"]:checked').val();
+  let min = parseInt(minmax.split(',')[0]);
+  let max = parseInt(minmax.split(',')[1]);
+  console.log(min);
+  let y = new Kartica(operacija, min, max);
+  let r;
+
+  for (const key in Array.from({
+      length: 5
+    })) {
+    r = y.generisiKarticu();
+    $('#appendme').append(r);
+  }
+  $('.rezultati').append(proveri_div);
+}
+
+const plus = (total, num) =>total + num;
+
+const minus = (total, num) => total - num;
+
+const pomnozi = (total, num) => total * num;
+
+const podeli = (total, num) => Math.floor((total / num)*100) / 100;
+
+const IzracunajObimPovrsina = (a,b) => [2 * a + 2 * b,a * b];
+
+const testirajMe = (niz,op) => {
+  k = new Kartica;
+  k.proveri(niz,op);
+}
+
+
