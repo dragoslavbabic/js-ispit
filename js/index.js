@@ -166,10 +166,6 @@ class Kartica {
 
   rndBroj = (g, h) => Math.floor(Math.random() * (h - g + 1)) + g;
 
-  proveriRezultat(x, y) {
-    return x == y ? 'Odgovor je tacan!!' : 'Odgovor nije tacan!!!';
-  }
-
   oceniMe() {
     let recenica = 'Odgovor je tacan!!';
     let tacan_odgovor = ocena.reduce((n, x) => n + (x === recenica), 0);
@@ -195,29 +191,39 @@ class Kartica {
       : 5 + '! BRAVO!!!!';
   }
 
+  proveriCard(element_zad, element_brojevi, x, y, z) {
+    let card =
+      '<div class="zadaci_sadrzaj card col " style="width: 18rem;">' +
+      '<h4>Zadatak broj ' +
+      element_zad +
+      '</h4>' +
+      '<p>Brojevi su: (' +
+      element_brojevi +
+      ')</p>' +
+      '<p>Tacan rezultat je: <b>' +
+      x +
+      '</b></p>' +
+      '<p>Tvoj odgovor je: <b>' +
+      y +
+      '<b></p>' +
+      z +
+      '</div>';
+    return card;
+  }
+
   proveri(x, op) {
     x.forEach((element) => {
       let x = element._brojevi.reduce(op);
       let y = element._rez;
-      //let z = uporedi(x,y);
-      let w = k.proveriRezultat(x, y);
-      let rez_card =
-        '<div class="zadaci_sadrzaj card col " style="width: 18rem;">' +
-        '<h4>Zadatak broj ' +
-        element._zadatak +
-        '</h4>' +
-        '<p>Brojevi su: (' +
-        element._brojevi +
-        ')</p>' +
-        '<p>Tacan rezultat je: <b>' +
-        x +
-        '</b></p>' +
-        '<p>Tvoj odgovor je: <b>' +
-        y +
-        '<b></p>' +
-        w +
-        '</div>';
-      ocena.push(w);
+      let z = op == obpov ? k.proveriRezultatOP(x, y) : k.proveriRezultat(x, y);
+      let rez_card = this.proveriCard(
+        element._zadatak,
+        element.brojevi,
+        x,
+        y,
+        z
+      );
+      ocena.push(z);
       $('.rezultati').append(rez_card);
       $('#proveri_rezultat').prop('disabled', true);
     });
@@ -226,6 +232,10 @@ class Kartica {
     $('.ocena').append(ww);
     arr.length = 0;
     ocena.length = 0;
+  }
+
+  proveriRezultat(x, y) {
+    return x == y ? 'Odgovor je tacan!!' : 'Odgovor nije tacan!!!';
   }
 }
 
