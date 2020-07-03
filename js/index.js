@@ -198,7 +198,7 @@ class Kartica {
       element_zad +
       '</h4>' +
       '<p>Brojevi su: (' +
-      element_brojevi +
+      element_brojevi.map((broj) => broj + '+') +
       ')</p>' +
       '<p>Tacan rezultat je: <b>' +
       x +
@@ -221,20 +221,22 @@ class Kartica {
 
   plus = (total, num) => total + num;
 
-
   proveri(x, op) {
     x.forEach((element) => {
-      let x = element._brojevi.reduce(this[op]);
-      let y = element._rez;
-      let z = op == 'obpov' ? k.proveriRezultatOP(x, y) : k.proveriRezultat(x, y);
+      let resenje = element._brojevi.reduce(this[op]);
+      let odgovor = element._rez;
+      let proveri_odgovor =
+        op == 'obpov'
+          ? k.proveriRezultatOP(resenje, odgovor)
+          : k.proveriRezultat(resenje, odgovor);
       let rez_card = this.proveriCard(
         element._zadatak,
-        element.brojevi,
-        x,
-        y,
-        z
+        element._brojevi,
+        resenje,
+        odgovor,
+        proveri_odgovor
       );
-      ocena.push(z);
+      ocena.push(proveri_odgovor);
       $('.rezultati').append(rez_card);
       $('#proveri_rezultat').prop('disabled', true);
     });
@@ -247,6 +249,19 @@ class Kartica {
 
   proveriRezultat(x, y) {
     return x == y ? 'Odgovor je tacan!!' : 'Odgovor nije tacan!!!';
+  }
+
+  proveriRezultatOP(resenje, odgovor) {
+    let tacni_netacni = [];
+    [
+      resenje[0] == odgovor[0]
+        ? tacni_netacni.push[{obim: 'Odgovor je tacan!!'}]
+        : tacni_netacni.push[{obim: 'Odgovor nije tacan!!!'}],
+      resenje[1] == odgovor[1]
+        ? tacni_netacni.push[{povrsina: 'Odgovor je tacan!!'}]
+        : tacni_netacni.push[{povrsina: 'Odgovor nije tacan!!!'}],
+    ];
+    return tacni_netacni;
   }
 }
 
@@ -294,7 +309,6 @@ function GenerisiZadatke(operacija) {
   }
   $('.rezultati').append(proveri_div);
 }
-//const obpov = (a, b) => [2 * a + 2 * b, a * b];
 
 const testirajMe = (niz, op) => {
   k = new Kartica();
