@@ -73,7 +73,7 @@ class Kartica {
       ? ['Podeli sledeće brojeve:', this.deljenje()]
       : [
           ' Izračunaj obim i površinu pravoguanika ako su date stranice:',
-          this.obpov(),
+          this.obpovrsina(),
         ];
   }
 
@@ -150,7 +150,7 @@ class Kartica {
     return x;
   }
 
-  obpov() {
+  obpovrsina() {
     let niz = this.rndNiz(2, this.min, this.max);
     let x =
       '<p><span>a =</span>' +
@@ -211,11 +211,22 @@ class Kartica {
     return card;
   }
 
+  obpov = (a, b) => [2 * a + 2 * b, a * b];
+
+  minus = (total, num) => total - num;
+
+  pomnozi = (total, num) => total * num;
+
+  podeli = (total, num) => Math.floor((total / num) * 100) / 100;
+
+  plus = (total, num) => total + num;
+
+
   proveri(x, op) {
     x.forEach((element) => {
-      let x = element._brojevi.reduce(op);
+      let x = element._brojevi.reduce(this[op]);
       let y = element._rez;
-      let z = op == obpov ? k.proveriRezultatOP(x, y) : k.proveriRezultat(x, y);
+      let z = op == 'obpov' ? k.proveriRezultatOP(x, y) : k.proveriRezultat(x, y);
       let rez_card = this.proveriCard(
         element._zadatak,
         element.brojevi,
@@ -260,9 +271,9 @@ class KarticaPodaci extends Array {
 function GenerisiZadatke(operacija) {
   let proveri_div =
     '<div class="col-12 text-center proveri_rezultate">' +
-    '<button onclick="testirajMe(arr,' +
+    '<button onclick="testirajMe(arr,\'' +
     operacija +
-    ')" id="proveri_rezultat" class="btn btn-primary">Proveri!</button>' +
+    '\')" id="proveri_rezultat" class="btn btn-primary">Proveri!</button>' +
     '</div>';
 
   arr.length = 0;
@@ -283,16 +294,7 @@ function GenerisiZadatke(operacija) {
   }
   $('.rezultati').append(proveri_div);
 }
-
-const plus = (total, num) => total + num;
-
-const minus = (total, num) => total - num;
-
-const pomnozi = (total, num) => total * num;
-
-const podeli = (total, num) => Math.floor((total / num) * 100) / 100;
-
-const obpov = (a, b) => [2 * a + 2 * b, a * b];
+//const obpov = (a, b) => [2 * a + 2 * b, a * b];
 
 const testirajMe = (niz, op) => {
   k = new Kartica();
