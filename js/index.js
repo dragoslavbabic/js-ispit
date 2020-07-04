@@ -1,5 +1,59 @@
 const arr = [];
 const ocena = [];
+const ok = 'Odgovor je tačan!!'
+const nok = 'Odgovor nije tačan!!'
+
+function getVal() {
+  $('.dugme').unbind().on('click', 'button', function () {
+    let rez = Number($(this).closest('div.sab').find('input').val());
+    $(this).closest('div.sab').find('#potvrdi_odgovor').text(rez);
+    let broj1 = Number($(this).closest('div.rand').find('#broj_1').text());
+    let broj2 = Number($(this).closest('div.rand').find('#broj_2').text());
+    let objekat = new KarticaPodaci(
+      arr.length + 1,
+      [broj1, broj2],
+      rez
+    );
+    arr.push(objekat);
+  });
+}
+
+function GenerisiZadatke(operacija) {
+  let proveri_div =
+    '<div class="col-12 text-center proveri_rezultate">' +
+    '<button onclick="testirajMe(arr,\'' +
+    operacija +
+    '\')" id="proveri_rezultat" class="btn btn-primary">Proveri!</button>' +
+    '</div>';
+
+  arr.length = 0;
+  ocena.length = 0;
+  $('#appendme,.proveri_rezultate,.zadaci_sadrzaj,.rezultati').html('');
+  let minmax = $('input[name="cifre"]:checked').val();
+  let min = parseInt(minmax.split(',')[0]);
+  let max = parseInt(minmax.split(',')[1]);
+  console.log(min);
+  let y = new Kartica(operacija, min, max);
+  let r;
+
+  for (const key in Array.from({
+      length: 5,
+    })) {
+    r = y.generisiKarticu();
+    $('#appendme').append(r);
+  }
+  $('.rezultati').append(proveri_div);
+}
+
+class KarticaPodaci extends Array {
+  constructor(zadatak, brojevi, rez) {
+    super();
+    this._zadatak = zadatak;
+    this._brojevi = brojevi;
+    this._rez = rez;
+  }
+}
+
 class Kartica {
   constructor(opis, min, max) {
     this.opis = opis;
@@ -29,17 +83,18 @@ class Kartica {
     let html =
       '<div class="form-group sab">' +
       '<input type="text" class="form-control" id="rez_obim">' +
-      '<label for="usr">Upisi rezultat!</label>' +
+      '<label for="usr">Upiši vrednost obima!</label>' +
+      '<br>&nbsp' +
       '<input type="text" class="form-control" id="rez_povrsina">' +
-      '<label for="usr">Upisi rezultat!</label>' +
+      '<label for="usr">Upiši vrednost površine!</label>' +
       '<div class="dugme">' +
       '<button onclick="getVal()" class="btn btn-primary">Potvrdi odgovor!</button>' +
       '</div>' +
       '<div class="odgovor">' +
       '<p >Tvoj odgovor je:<br> ' +
-      'Obim je: <span id="potvrdi_odgovor_obim">' +
+      'Obim =  <span id="potvrdi_odgovor_obim">' +
       '</span><br>' +
-      'Površina je: <span id="potvrdi_odgovor_povrsina">' +
+      'Površina = <span id="potvrdi_odgovor_povrsina">' +
       '</span>' +
       '</p>' +
       '</div>' +
@@ -63,31 +118,29 @@ class Kartica {
 
   opisOperacija() {
     let opis = this.opis;
-    return opis == 'plus'
-      ? ['Saberi sledeće brojeve:', this.sabiranje()]
-      : opis == 'minus'
-      ? ['Oduzmi sledeće brojeve:', this.oduzimanje()]
-      : opis == 'pomnozi'
-      ? ['Pomnoži sledeće brojeve:', this.mnozenje()]
-      : opis == 'podeli'
-      ? ['Podeli sledeće brojeve:', this.deljenje()]
-      : [
-          ' Izračunaj obim i površinu pravoguanika ako su date stranice:',
-          this.obpovrsina(),
-        ];
+    return opis == 'plus' ? ['Saberi sledeće brojeve:', this.sabiranje()] :
+      opis == 'minus' ? ['Oduzmi sledeće brojeve:', this.oduzimanje()] :
+      opis == 'pomnozi' ? ['Pomnoži sledeće brojeve:', this.mnozenje()] :
+      opis == 'podeli' ? ['Podeli sledeće brojeve:', this.deljenje()] : [
+        ' Izračunaj obim i površinu pravoguanika ako su date stranice:',
+        this.obpovrsina(),
+      ];
   }
 
   rndNiz(l, g, h) {
     let niz = [];
-    for (const key in Array.from({length: l})) {
+    for (const key in Array.from({
+        length: l
+      })) {
       let r = this.rndBroj(g, h);
       niz.push(r);
     }
-    niz.sort(function (a, b) {
-      return b - a;
-    });
+    niz.sort((a, b) => b - a
+    );
     return niz;
   }
+
+  rndBroj = (g, h) => Math.floor(Math.random() * (h - g + 1)) + g;
 
   sabiranje() {
     let niz = this.rndNiz(3, this.min, this.max);
@@ -164,49 +217,31 @@ class Kartica {
     return x;
   }
 
-  rndBroj = (g, h) => Math.floor(Math.random() * (h - g + 1)) + g;
+  proveriCard(element_zad, x, y, z) {
+    let tacan_rezultat;
+    let tvoj_odgovor;
+    let p;
+    'obim' in z ? p = "<br>Obim: " + z.obim + '<br>' + "Površina: " + z.povrsina : p = z.operacija;
+    "obim" in z
+      ?
+      (tacan_rezultat =
+        "<br>Obim = " + x[0] + "<br>" + "Površina = " + x[1] + "<br>") :
+      (tacan_rezultat = x);
+    'obim' in z ? tvoj_odgovor = '<br>Obim = ' + y[0] + '<br>' + 'Površina = ' + y[1] + '<br>' : tvoj_odgovor = y;
 
-  oceniMe() {
-    let recenica = 'Odgovor je tacan!!';
-    let tacan_odgovor = ocena.reduce((n, x) => n + (x === recenica), 0);
-    let tekst =
-      '<div class="col-12 text-center oceni_me">' +
-      '<h4>Ocena je ' +
-      this.prosek(tacan_odgovor) +
-      '</h4' +
-      '</div>';
-    return tekst;
-  }
-
-  prosek(x) {
-    let prosek = x / 5;
-    return prosek < 0.4
-      ? 1
-      : prosek > 0.4 && prosek < 0.54
-      ? 2
-      : prosek > 0.55 && prosek < 0.69
-      ? 3
-      : prosek > 0.7 && prosek < 0.84
-      ? 4
-      : 5 + '! BRAVO!!!!';
-  }
-
-  proveriCard(element_zad, element_brojevi, x, y, z) {
     let card =
       '<div class="zadaci_sadrzaj card col " style="width: 18rem;">' +
       '<h4>Zadatak broj ' +
       element_zad +
       '</h4>' +
-      '<p>Brojevi su: (' +
-      element_brojevi.map((broj) => broj + '+') +
-      ')</p>' +
-      '<p>Tacan rezultat je: <b>' +
-      x +
+      '</p>' +
+      '<p>Tačan rezultat je: <b>' +
+      tacan_rezultat +
       '</b></p>' +
       '<p>Tvoj odgovor je: <b>' +
-      y +
+      tvoj_odgovor +
       '<b></p>' +
-      z +
+      p +
       '</div>';
     return card;
   }
@@ -226,12 +261,11 @@ class Kartica {
       let resenje = element._brojevi.reduce(this[op]);
       let odgovor = element._rez;
       let proveri_odgovor =
-        op == 'obpov'
-          ? k.proveriRezultatOP(resenje, odgovor)
-          : k.proveriRezultat(resenje, odgovor);
+        op == 'obpov' ?
+        k.proveriRezultatOP(resenje, odgovor) :
+        k.proveriRezultat(resenje, odgovor);
       let rez_card = this.proveriCard(
         element._zadatak,
-        element._brojevi,
         resenje,
         odgovor,
         proveri_odgovor
@@ -240,74 +274,55 @@ class Kartica {
       $('.rezultati').append(rez_card);
       $('#proveri_rezultat').prop('disabled', true);
     });
-
-    let ww = this.oceniMe();
-    $('.ocena').append(ww);
+    $('.ocena').append(this.oceniMe(op));
     arr.length = 0;
     ocena.length = 0;
   }
 
-  proveriRezultat(x, y) {
-    return x == y ? 'Odgovor je tacan!!' : 'Odgovor nije tacan!!!';
-  }
+  proveriRezultat = (x, y) => x == y ? {operacija: ok} : {operacija: nok};
 
   proveriRezultatOP(resenje, odgovor) {
-    let tacni_netacni = [];
-    [
-      resenje[0] == odgovor[0]
-        ? tacni_netacni.push[{obim: 'Odgovor je tacan!!'}]
-        : tacni_netacni.push[{obim: 'Odgovor nije tacan!!!'}],
-      resenje[1] == odgovor[1]
-        ? tacni_netacni.push[{povrsina: 'Odgovor je tacan!!'}]
-        : tacni_netacni.push[{povrsina: 'Odgovor nije tacan!!!'}],
-    ];
+    let tacni_netacni = {};
+    resenje[0] == odgovor[0] ?
+      tacni_netacni.obim = ok :
+      tacni_netacni.obim = nok
+    resenje[1] == odgovor[1] ?
+      tacni_netacni.povrsina = ok :
+      tacni_netacni.povrsina = nok;
     return tacni_netacni;
   }
-}
 
-class Proveri {
-  constructor(zadatak, brojevi, rez, tacan_rez) {
-    this._zadatak = zadatak;
-    this._brojevi = brojevi;
-    this._rez = rez;
-    this._tacan_rez = tacan_rez;
+  oceniMe(op) {
+    let newob = [];
+
+    ocena.forEach(item => Object.keys(item).map( key => {
+      newob.push(item[key]);
+    }));
+
+    let tacan_odgovor = newob.reduce((n, x) => n + (x == nok), 0);
+    console.log(tacan_odgovor);
+    let tekst =
+      '<div class="col-12 text-center oceni_me">' +
+      '<h4>Od 5 zadataka urađeno je '+ arr.length+'.<br> Ocena je ' +
+      this.odrediProsek(tacan_odgovor,op) +
+      '</h4' +
+      '</div>';
+    return tekst;
   }
-}
 
-class KarticaPodaci extends Array {
-  constructor(zadatak, brojevi, rez) {
-    super();
-    this._zadatak = zadatak;
-    this._brojevi = brojevi;
-    this._rez = rez;
-  }
-}
+  prosek = (x,op) => op == 'obpov' ? (x / 10) : (x / 5) ;
 
-function GenerisiZadatke(operacija) {
-  let proveri_div =
-    '<div class="col-12 text-center proveri_rezultate">' +
-    '<button onclick="testirajMe(arr,\'' +
-    operacija +
-    '\')" id="proveri_rezultat" class="btn btn-primary">Proveri!</button>' +
-    '</div>';
-
-  arr.length = 0;
-  ocena.length = 0;
-  $('#appendme,.proveri_rezultate,.zadaci_sadrzaj,.rezultati').html('');
-  let minmax = $('input[name="cifre"]:checked').val();
-  let min = parseInt(minmax.split(',')[0]);
-  let max = parseInt(minmax.split(',')[1]);
-  console.log(min);
-  let y = new Kartica(operacija, min, max);
-  let r;
-
-  for (const key in Array.from({
-    length: 5,
-  })) {
-    r = y.generisiKarticu();
-    $('#appendme').append(r);
-  }
-  $('.rezultati').append(proveri_div);
+  odrediProsek = (x,op) => 
+     this.prosek(x,op) < 0.4 ?
+      1 :
+      this.prosek(x,op) >= 0.4 && this.prosek(x,op) < 0.55 ?
+      2 :
+      this.prosek(x,op) >= 0.55 && this.prosek(x,op) < 0.7 ?
+      3 :
+      this.prosek(x,op) >= 0.7 && this.prosek(x,op) < 0.85 ?
+      4 :
+      5 + '! BRAVO!!!!';
+    
 }
 
 const testirajMe = (niz, op) => {
