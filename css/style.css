@@ -1,5 +1,6 @@
 body {
     font-family: "Open Sans";
+    color: #06518f !important;
 }
 
 .naslov {
@@ -48,4 +49,12 @@ p span {
 .zadaci_sadrzaj{
     float: left;
     margin-top: 20px;
+}
+
+img{
+    max-width: 60%;
+}
+
+.ocena{
+    margin-top: 15px;
 }

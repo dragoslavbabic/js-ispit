@@ -43,6 +43,8 @@ function GenerisiZadatke(operacija) {
     $('#appendme').append(r);
   }
   $('.rezultati').append(proveri_div);
+  $('.ocena').html('');
+
 }
 
 class KarticaPodaci extends Array {
@@ -65,7 +67,7 @@ class Kartica {
     let html =
       '<div class="form-group sab">' +
       '<input type="text" class="form-control ">' +
-      '<label for="usr">Upisi rezultat!</label>' +
+      '<label for="usr">Upiši rezultat!</label>' +
       '<div class="dugme">' +
       '<button onclick="getVal()" class="btn btn-primary">Potvrdi odgovor!</button>' +
       '</div>' +
@@ -274,6 +276,7 @@ class Kartica {
       $('.rezultati').append(rez_card);
       $('#proveri_rezultat').prop('disabled', true);
     });
+    alert(this.oceniMe(op));
     $('.ocena').append(this.oceniMe(op));
     arr.length = 0;
     ocena.length = 0;
@@ -299,7 +302,7 @@ class Kartica {
       newob.push(item[key]);
     }));
 
-    let tacan_odgovor = newob.reduce((n, x) => n + (x == nok), 0);
+    let tacan_odgovor = newob.reduce((n, x) => n + (x == ok), 0);
     console.log(tacan_odgovor);
     let tekst =
       '<div class="col-12 text-center oceni_me">' +
